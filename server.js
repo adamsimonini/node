@@ -7,10 +7,13 @@ var date = require('./dateTime');
 var urlParser = require('./praseUrl');
 var fileSystem = require('./fileSystem.js');
 var handleEmail = require('./handleEmail.js');
+var mysql = require('./mysql');
 
 // gain access to even object
 var events = require('events');
 var eventEmitter = new events.EventEmitter();
+
+// mysql.connectToDB();
 
 /* 
   HTTP module can create an HTTP server that listeners to ports
