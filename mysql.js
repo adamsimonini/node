@@ -39,3 +39,20 @@ exports.alterTable = function(table) {
     console.log("The table has been altered");
   });
 }
+
+exports.insertSingleRecord = function(table, values) {
+  var sql = `INSERT INTO ${table.name} (${table.xAxis}, ${table.yAxis}) VALUES ("${values[0]}", "${values[1]}")`;
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(`\n The following as been added to ${table.name}: \n Name: ${values[0]} \n Occupation: ${values[1]} \n`);
+  });
+}
+
+exports.insertMultipleRecord = function(table, multipleValues) {
+  var sql = `INSERT INTO ${table.name} (${table.xAxis}, ${table.yAxis}) VALUES ?`;
+  var values = multipleValues
+  con.query(sql, [values], function (err, result) {
+    if (err) throw err;
+    console.log(result.affectedRows + ` records were added to ${table.name}.`);
+  });
+}
