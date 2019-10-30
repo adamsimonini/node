@@ -53,6 +53,41 @@ exports.insertMultipleRecord = function(table, multipleValues) {
   var values = multipleValues
   con.query(sql, [values], function (err, result) {
     if (err) throw err;
-    console.log(result.affectedRows + ` records were added to ${table.name}.`);
+    console.log(result.affectedRows + ` records were bulk-added to ${table.name}.`);
   });
+}
+
+exports.returnInsertedId = function(table, values) {
+  var sql = `INSERT INTO ${table.name} (${table.xAxis}, ${table.yAxis}) VALUES ("${values[0]}", "${values[1]}")`;
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted, ID: " + result.insertId);
+    return result.insertId
+  });
+} 
+
+exports.select = function(table, amount) {
+  con.query(`SELECT ${amount} FROM ${table.name}`, function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+  });
+}
+
+exports.dropTable = function(table) {
+  var sql = `DROP TABLE IF EXISTS ${table.name}`;
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(`Table ${table.name} has been dropped`);
+  });
+}
+
+exports.tableLength = function(table) {
+  var length = 0;
+  var sql = `SELECT COUNT(*) FROM ${table.name}`;
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(`Number of rows in ${table.name}: ` + Object.values(result[0]));
+    length = parseInt(Object.values(result[0]));
+  });
+  return length;
 }

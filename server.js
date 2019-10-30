@@ -18,32 +18,25 @@ mysql.connectToDB('testdb');
 mysql.createDB("TestDB");
 let myTable = {
   primaryKey: 'id',
-  name: 'new_table',
+  name: 'employee_info',
   xAxis: 'name',
-  yAxis: 'occupation',
+  yAxis: 'position',
 }
 
 let employeeList = [
-  ['John', 'Highway 71'],
-  ['Peter', 'Lowstreet 4'],
-  ['Amy', 'Apple st 652'],
-  ['Hannah', 'Mountain 21'],
-  ['Michael', 'Valley 345'],
-  ['Sandy', 'Ocean blvd 2'],
-  ['Betty', 'Green Grass 1'],
-  ['Richard', 'Sky st 331'],
-  ['Susan', 'One way 98'],
-  ['Vicky', 'Yellow Garden 2'],
-  ['Ben', 'Park Lane 38'],
-  ['William', 'Central st 954'],
-  ['Chuck', 'Main Road 989'],
-  ['Viola', 'Sideway 1633']
+  ['Yang', 'Entrepreneur'],
+  ['Sanders', 'Senator'],
 ]
 
+
 mysql.createTable(myTable);
-// mysql.alterTable(newTable);
-mysql.insertSingleRecord(myTable, ["Alan", "Web Developer"]);
+// mysql.alterTable(myTable);
+mysql.insertSingleRecord(myTable, ["Warren", "Senator"]);
 mysql.insertMultipleRecord(myTable, employeeList);
+mysql.returnInsertedId(myTable, ["Obama", "former president"]);
+mysql.select(myTable, "name, position"); // it can be column name, multiple column names seperated by a comma, or it can be all via the asterisk
+mysql.tableLength(myTable);
+mysql.dropTable(myTable);
 
 /* 
   HTTP module can create an HTTP server that listeners to ports
