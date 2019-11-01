@@ -91,3 +91,25 @@ exports.tableLength = function(table) {
   });
   return length;
 }
+
+exports.filterBy = function(table, column, filter) {
+  con.query(`SELECT * FROM ${table} WHERE ${column} = '${filter}'`, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+}
+
+exports.orderBy = function(table) {
+  con.query(`SELECT * FROM ${table.name} ORDER BY ${table.xAxis}`, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+}
+
+exports.deleteRecordsWhere = function(table, column, filter) {
+  var sql = `DELETE FROM ${table} WHERE ${column} = ${filter}`;
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Number of records deleted: " + result.affectedRows);
+  });
+}

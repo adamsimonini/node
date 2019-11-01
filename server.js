@@ -14,34 +14,63 @@ var events = require('events');
 var eventEmitter = new events.EventEmitter();
 // writeHead(statusCode[, statusMessage][, headers]) && statusCode must be an integer 3 decimals long
 
-// mysql.connectToDB('testdb');
-mysql.createDB("test_db");
-// let myTable = {
-//   primaryKey: 'id',
-//   name: 'employee_info',
-//   xAxis: 'name',
-//   yAxis: 'position',
-// }
+mysql.connectToDB('testdb');
+mysql.createDB("TestDB");
+let myTable = {
+  primaryKey: 'id',
+  name: 'employee_info',
+  xAxis: 'name',
+  yAxis: 'position',
+}
 
-// let employeeList = [
-//   ['Yang', 'Entrepreneur'],
-//   ['Sanders', 'Senator'],
-// ]
+let employeeList = [
+  ['Yang', 'Entrepreneur'],
+  ['Sanders', 'Senator'],
+  ['Pete', 'Buttigieg'],
+  ['Tulsi', 'Gabbard'],
+]
 
+mysql.createTable(myTable);
+// mysql.alterTable(myTable);
+mysql.insertSingleRecord(myTable, ["Warren", "Senator"]);
+mysql.insertMultipleRecord(myTable, employeeList);
+mysql.returnInsertedId(myTable, ["Obama", "former president"]);
+mysql.select(myTable, "name, position"); // it can be column name, multiple column names seperated by a comma, or it can be all via the asterisk
+mysql.tableLength(myTable);
+mysql.filterBy(myTable.name, myTable.xAxis, 'Obama');
+mysql.orderBy(myTable);
+mysql.deleteRecordsWhere(myTable.name, myTable.xAxis, "A");
+mysql.dropTable(myTable);
 
-// mysql.createTable(myTable);
-// // mysql.alterTable(myTable);
-// mysql.insertSingleRecord(myTable, ["Warren", "Senator"]);
-// mysql.insertMultipleRecord(myTable, employeeList);
-// mysql.returnInsertedId(myTable, ["Obama", "former president"]);
-// mysql.select(myTable, "name, position"); // it can be column name, multiple column names seperated by a comma, or it can be all via the asterisk
-// mysql.tableLength(myTable);
-// mysql.dropTable(myTable);
+/* 
+  HTTP module can create an HTTP server that listeners to ports
+  the createServer function will execute the moment someone tries to access the specified port on the computer
+*/
 
-// /* 
-//   HTTP module can create an HTTP server that listeners to ports
-//   the createServer function will execute the moment someone tries to access the specified port on the computer
-// */
+http.createServer(function (req, res) {
+  res.writeHead(999, '**Custom Header**', {'Content-Type': 'text/html'});
+  res.write('The date & time: ' + date.dateTime());
+  res.write('<br/>');
+  res.write('Month from url: ' + urlParser.praseUrl(req.url).month);
+  res.write('<br/>');
+  res.write('Year from url: ' + urlParser.praseUrl(req.url).year);
+  res.write('<br/>');
+  res.write('<br/>');
+  res.end('server running...');
+}).listen(8080);
+
+// http://localhost:8080/?year=2017&month=July
+
+/* FILES ON SERVER */
+// http.createServer(function (req, res) {
+//   // fileSystem.getFile(res, "upload-file.html");
+//   // fileSystem.setFile("my-new-file.txt");
+//   // fileSystem.openFile("createdWithOpen.txt");
+//   // fileSystem.renameFile("createdWithOpen.txt", "renamedWithRename.txt");
+//   // fileSystem.deleteFile("createdWithOpen.txt");
+//   triggerHalloween();
+// }).listen(8080);
+
 
 // http.createServer(function (req, res) {
 //   res.writeHead(999, '**Custom Header**', {'Content-Type': 'text/html'});
